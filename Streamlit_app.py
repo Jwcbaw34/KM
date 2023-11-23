@@ -16,7 +16,7 @@ PASSWORD = "sgh"
 MAIN_DIR = "/content/KM_POC"
 VECTORSTORE_PATH = os.path.join(MAIN_DIR, "vectorstore")
 
-template = \"\"\"
+template = """
 Use the following context (delimited by <ctx></ctx>) and the chat history (delimited by <hs></hs>) to answer the question:
 ------
 <ctx>
@@ -29,7 +29,7 @@ Use the following context (delimited by <ctx></ctx>) and the chat history (delim
 ------
 {question}
 Answer:
-\"\"\"
+"""
 
 prompt = PromptTemplate(
     input_variables=["history", "context", "question"],
