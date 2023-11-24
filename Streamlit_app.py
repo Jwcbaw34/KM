@@ -117,9 +117,7 @@ def get_qasource_chain(docsearch):
     )
     return qasource_chain
 
-def handle_userinput(user_question):
-    response = st.session_state.qasource_chain({"query": user_question})
-
+def handle_userinput(user_question, response):
     # Add user's question and bot's response to the chat history
     st.session_state.chat_history.append(('user', user_question))
     st.session_state.chat_history.append(('bot', response['result']))
@@ -151,16 +149,16 @@ def main():
     if "password_flag" not in st.session_state:
         st.session_state.password_flag = False
 
-    st.write(css, unsafe_allow_html=True)
-
     docsearch = FAISS.load_local(VECTORSTORE_PATH, OpenAIEmbeddings())
-    
+    qasource_chain = get_qasource_chain(docsearch)
+
     if st.session_state.password_flag:
         st.header("Knowledge Mgmt Chatbot :bulb:")
         user_question = st.text_input("Ask about innovation/improvement projects:")
 
         if user_question:
-            handle_userinput(user_question)
+            response = qasource_chain({"query": user_question})  # Use qasource_chain directly
+            handle_userinput(user_question, response)  # Pass the response to handle_userinput()
 
     else:
         initialize_app()
