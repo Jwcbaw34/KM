@@ -34,3 +34,25 @@ if not os.path.exists(local_document_path):
 else:
     st.success("Document already downloaded.")
 
+# Define the directory where you want to store the vector store
+VECTORSTORE_PATH = "vectorstore"  # You can customize this path if needed
+
+# If the vector store directory doesn't exist, create it
+if not os.path.exists(VECTORSTORE_PATH):
+    st.info("Creating the vector store...")
+
+    # Load and process the document
+    document = PyMuPDFLoader(local_document_path).load()
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    texts = text_splitter.split_documents([document])
+
+    # Create embeddings
+    embeddings = OpenAIEmbeddings()
+
+    # Create the vector store
+    docsearch = FAISS.from_documents(texts, embeddings)
+    docsearch.save_local(VECTORSTORE_PATH)
+
+    st.success("Vector store created successfully.")
+else:
+    st.success("Vector store already exists.")
