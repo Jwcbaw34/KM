@@ -102,7 +102,7 @@ if not os.path.exists(VECTORSTORE_PATH):
 else:
     st.success("Vector store already exists.")
 
-def get_qasource_chain():
+def get_qasource_chain(docsearch):
     qasource_chain = RetrievalQA.from_chain_type(
         llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, max_tokens=1024),
         chain_type="stuff",
