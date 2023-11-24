@@ -11,6 +11,9 @@ from langchain.chains import RetrievalQA
 from htmlTemplates import css, bot_template, user_template
 from langchain import PromptTemplate
 
+# Call set_page_config here at the top-level scope
+st.set_page_config(page_title="Knowledge Mgmt Chatbot :bulb:", page_icon=":bulb:")
+
 #os.environ["OPENAI_API_KEY"] = "abc"
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 PASSWORD = "sgh"
@@ -148,7 +151,7 @@ def main():
     if "password_flag" not in st.session_state:
         st.session_state.password_flag = False
 
-    st.set_page_config(page_title="Knowledge Mgmt Chatbot :bulb:", page_icon=":bulb:")
+    #st.set_page_config(page_title="Knowledge Mgmt Chatbot :bulb:", page_icon=":bulb:")
     st.write(css, unsafe_allow_html=True)
 
     if st.session_state.password_flag:
