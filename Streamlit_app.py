@@ -10,7 +10,8 @@ from langchain.chains import RetrievalQA
 from htmlTemplates import css, bot_template, user_template
 from langchain import PromptTemplate
 
-os.environ["OPENAI_API_KEY"] = "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"
+#os.environ["OPENAI_API_KEY"] = "abc"
+openai_api_key = os.environ.get("OPENAI_API_KEY")
 PASSWORD = "sgh"
 
 MAIN_DIR = "/content/KM_POC"
