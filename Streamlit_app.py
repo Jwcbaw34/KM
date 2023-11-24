@@ -43,8 +43,13 @@ if not os.path.exists(VECTORSTORE_PATH):
 
     # Load and process the document
     document = PyMuPDFLoader(local_document_path).load()
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    texts = text_splitter.split_documents([document])
+
+    # Process each page in the document (assuming 'document' is a list of pages)
+    texts = []
+    for page in document:
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+        page_texts = text_splitter.split_documents([page])
+        texts.extend(page_texts)
 
     # Create embeddings
     embeddings = OpenAIEmbeddings()
