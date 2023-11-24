@@ -102,7 +102,7 @@ if not os.path.exists(VECTORSTORE_PATH):
 else:
     st.success("Vector store already exists.")
 
-def get_qasource_chain(docsearch):
+def get_qasource_chain():
     qasource_chain = RetrievalQA.from_chain_type(
         llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, max_tokens=1024),
         chain_type="stuff",
@@ -154,6 +154,10 @@ def main():
     #st.set_page_config(page_title="Knowledge Mgmt Chatbot :bulb:", page_icon=":bulb:")
     st.write(css, unsafe_allow_html=True)
 
+    docsearch = FAISS.load_local(VECTORSTORE_PATH, OpenAIEmbeddings())
+    # Now pass 'docsearch' as an argument to 'get_qasource_chain()'
+    qasource_chain = get_qasource_chain(docsearch)
+    
     if st.session_state.password_flag:
         if "qasource_chain" not in st.session_state:
             st.session_state.qasource_chain = get_qasource_chain()
