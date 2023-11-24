@@ -151,17 +151,11 @@ def main():
     if "password_flag" not in st.session_state:
         st.session_state.password_flag = False
 
-    #st.set_page_config(page_title="Knowledge Mgmt Chatbot :bulb:", page_icon=":bulb:")
     st.write(css, unsafe_allow_html=True)
 
     docsearch = FAISS.load_local(VECTORSTORE_PATH, OpenAIEmbeddings())
-    # Now pass 'docsearch' as an argument to 'get_qasource_chain()'
-    qasource_chain = get_qasource_chain(docsearch)
     
     if st.session_state.password_flag:
-        if "qasource_chain" not in st.session_state:
-            st.session_state.qasource_chain = get_qasource_chain()
-
         st.header("Knowledge Mgmt Chatbot :bulb:")
         user_question = st.text_input("Ask about innovation/improvement projects:")
 
